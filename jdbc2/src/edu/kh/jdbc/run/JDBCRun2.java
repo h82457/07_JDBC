@@ -30,14 +30,26 @@ public class JDBCRun2 {
 			
 			// 2. 부서 전체 조회
 			
-			// *** DAO 메서드 호출후 결과 반환 받기 ***
-			Department dept = new Department(deptId, deptTitle, locationId);
-				
-			// DB 삽입 후 결과 반환 받기
-			int result = dao.insertDepartment(dept);
-			
-			if(result > 0) System.out.println("[삽입 성공]");
-			else System.out.println("[삽입 실패]");
+			// ** DAO 메서드 호출 후 결과 반환 받기 ***
+						Department dept = new Department(deptId, deptTitle, locationId);
+						
+						// DB 삽입 후 결과 반환 받기
+						int result = dao.insertDepartment(dept);
+						
+						if(result > 0) {
+							System.out.println("[삽입 성공]");
+							
+							// 2. 부서 전체 조회
+							List<Department> deptList = dao.selectAll();
+							
+							for(Department d : deptList) {
+								System.out.println(d.toString());
+							}
+							
+						} else {
+							System.out.println("[삽입 실패]");
+						}
+						
 
 		} catch (Exception e) {
 			e.printStackTrace();
