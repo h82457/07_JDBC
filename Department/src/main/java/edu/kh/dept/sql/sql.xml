@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
 <properties>
-	
+
+	<!-- 모든 부서 조회 -->
 	<entry key="selectAll">
 		SELECT * FROM DEPARTMENT4
 		ORDER BY DEPT_ID ASC
 	</entry>
+
+	<!-- 부서 추가 -->	
+	<entry key="insertDepartment">
+		INSERT INTO DEPARTMENT4
+		VALUES(?, ?, ?)
+	</entry>
+	
+	
+	
+	
 </properties>
