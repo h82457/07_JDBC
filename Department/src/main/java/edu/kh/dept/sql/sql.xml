@@ -15,7 +15,30 @@
 		VALUES(?, ?, ?)
 	</entry>
 	
+	<!-- 부서 삭제 -->	
+	<entry key="deleteDepartment">
+		DELETE FROM DEPARTMENT4
+		WHERE DEPT_ID = ?
+	</entry>	
 	
+	<!-- 부서 1행 조회 -->	
+	<entry key="selectOne">
+		SELECT * FROM DEPARTMENT4
+		WHERE DEPT_ID = ?
+	</entry>	
 	
+	<!-- 부서 수정 -->	
+	<entry key="updateDepartment">
+		UPDATE DEPARTMENT4
+		SET DEPT_TITLE = ?, LOCATION_ID = ?
+		WHERE DEPT_ID = ?
+	</entry>
+	
+	<!-- 부서 검색 -->	
+	<entry key="searchDepartment">
+		SELECT *
+		FROM DEPARTMENT4
+		WHERE DEPT_TITLE LIKE '%' || ? || '%'
+	</entry>	
 	
 </properties>

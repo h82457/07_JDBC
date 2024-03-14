@@ -14,6 +14,14 @@
             <a href="/department/insert">부서 추가</a> <!-- ~> insert.jsp -->
         </li>
 
+        <hr>
+
+        <h3>부서명으로 검색(검색어가 포함된 부서 모두 조회)</h3>
+
+        <form action="/Department/search" method="GET">
+            검색어 입력 : <input type="text" name="keyword">
+            <button>검색</button>
+        </form>
     </ul>
 </body>
 </html>

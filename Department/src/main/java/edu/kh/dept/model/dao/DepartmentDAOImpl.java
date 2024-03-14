@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.catalina.ant.DeployTask;
+
 import edu.kh.dept.common.JDBCTemplate;
 import edu.kh.dept.model.dto.Department;
 
@@ -104,8 +106,125 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 			close(pstmt);
 		}
 		
+		return result;
+	}
+
+	/* 부서 삭제 */
+	@Override
+	public int deleteDepartment(String deptId, Connection conn) throws SQLException {
+		
+		// 1. 결과 저장용 변수 선언 / 객체 생성
+		int result = 0;
+		
+		try {
+			// 2. SQL 얻어오기
+			String sql = prop.getProperty("deleteDepartment");
+			
+			// 3. PreparedStatement 객체 생성 + SQL 적재
+			pstmt = conn.prepareStatement(sql);
+			
+			// 4. ?에 값 대입
+			pstmt.setString(1, deptId);
+			
+			// 5. SQL 수행후 결과 반환
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			// 6. 사용한 JDBC 객체 자원 반환
+			close(pstmt);
+		}
 		
 		return result;
+	}
+
+
+	@Override
+	public Department selectOne(Connection conn, String deptId) throws SQLException {
+		
+		// 결과 저장용 변수 선언
+		Department dept = null;
+		
+		try {
+			
+			// SQL 얻어오기
+			String sql = prop.getProperty("selectOne");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, deptId);
+			
+			// SQL(SELECT) 수행후 결과 반환받기
+			rs = pstmt.executeQuery();
+			
+			// PK를 조건으로 삼은 SELECT문은
+			// 조회 성공 시 1행만 조회됨! --> while 대신 if문으로 1회만 접근
+			if(rs.next()) {
+				dept = new Department( 
+							rs.getString("DEPT_ID"),
+							rs.getString("DEPT_TITLE"),
+							rs.getString("LOCATION_ID")
+						);
+			}
+			
+		} finally {
+			// 사용한 JDBC 객체 자원 반환
+			close(rs);
+			close(conn);
+		}
+		return dept; // 조회 실패시 null, 성공시 null외 다른값
+	}
+
+	/* 부서 수정 */
+	@Override
+	public int updateDepartment(Department dept, Connection conn) throws SQLException {
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateDepartment");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, dept.getDeptTitle());
+			pstmt.setString(2, dept.getLocationId());
+			pstmt.setString(3, dept.getDeptId());
+			
+			result = pstmt.executeUpdate();		
+			
+		} catch (Exception e) {
+			e.printStackTrace();		
+		
+		} finally { // <- JDBC 객체 자원 무조건 반환 목적
+			close(pstmt);
+		}
+		return result;
+	}
+
+	// 부서 검색
+	@Override
+	public List<Department> searchDepartment(Connection conn, String keyword) throws SQLException {
+
+		List<Department> deptList = new ArrayList<Department>();
+		
+		String sql = prop.getProperty("searchDepartment");
+		
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, keyword);
+		
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			
+			String deptId = rs.getString("DEPT_ID");
+			String deptTitle = rs.getString("DEPT_TITLE");
+			String locationId = rs.getString("LOCATION_ID");
+		
+			Department dept = new Department(deptId, deptTitle, locationId);
+			
+			deptList.add(dept);
+		}
+		
+		return deptList;
 	}
 	
 	

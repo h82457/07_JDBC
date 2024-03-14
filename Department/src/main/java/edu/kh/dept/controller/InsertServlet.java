@@ -37,8 +37,8 @@ public class InsertServlet extends HttpServlet{
 	
 	
 	
-	// <form method="POST">, ajax(비동기 통신 요청 POST 방식)
-	// -> POST 방식 요청
+	// <form method="POST">, ajax(비동기 통신 요청 POST 방식) -> POST 방식 요청
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
