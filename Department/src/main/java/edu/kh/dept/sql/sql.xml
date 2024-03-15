@@ -35,7 +35,7 @@
 	</entry>
 	
 	<!-- 부서 검색 -->	
-	<entry key="searchDepartment">
+	<entry key="searchDepartment"> <!-- entry : K:V -->
 		SELECT *
 		FROM DEPARTMENT4
 		WHERE DEPT_TITLE LIKE '%' || ? || '%'

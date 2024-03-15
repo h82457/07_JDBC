@@ -205,25 +205,31 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 
 		List<Department> deptList = new ArrayList<Department>();
 		
-		String sql = prop.getProperty("searchDepartment");
-		
-		pstmt = conn.prepareStatement(sql);
-		
-		pstmt.setString(1, keyword);
-		
-		rs = pstmt.executeQuery();
-		
-		while(rs.next()) {
+		try {
 			
-			String deptId = rs.getString("DEPT_ID");
-			String deptTitle = rs.getString("DEPT_TITLE");
-			String locationId = rs.getString("LOCATION_ID");
-		
-			Department dept = new Department(deptId, deptTitle, locationId);
+			String sql = prop.getProperty("searchDepartment");
 			
-			deptList.add(dept);
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, keyword);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) { 
+				
+//				String deptId = rs.getString(1); // 조회 결과 컬럼 순서로 저장 가능				
+				String deptId = rs.getString("DEPT_ID");
+				String deptTitle = rs.getString("DEPT_TITLE");
+				String locationId = rs.getString("LOCATION_ID");
+
+				Department dept = new Department(deptId, deptTitle, locationId);
+				
+				deptList.add(dept);
+			}			
+		} finally {
+			close(rs);
+			close(pstmt);
 		}
-		
 		return deptList;
 	}
 	
