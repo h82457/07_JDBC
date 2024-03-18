@@ -1,0 +1,29 @@
+*{
+    border: 1px solid grey;
+    margin: 0;
+}
+
+.container{    
+	width:700px;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    padding: 100px 50px;
+}
+.container > div{
+	width: 300px;
+    margin: 0 auto;
+    padding: 10px;
+}
+.container > div {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+}
+label{
+	display: flex;
+	justify-content: center;
+}
+td{
+	text-align: center;
+}

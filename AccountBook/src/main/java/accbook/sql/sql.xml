@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties>
+
+<properties>
+
+	<!-- 할 일 목록 조회 -->
+	<entry key="selectIncome">
+		SELECT BALANCE, IN_TITLE, IN_AMOUNT, TO_CHAR(IN_DATE, 'YYYY-MM-DD HH24:MI') IN_DATE
+		FROM AB_ACCOUNT
+		JOIN AB_INCOME ON (USER_CODE = IN_USER_CODE)
+		WHERE USER_CODE = ?
+		ORDER BY IN_DATE	
+	</entry>
+
+	
+</properties>
